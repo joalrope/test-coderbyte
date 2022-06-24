@@ -19,34 +19,27 @@
 import requests
 
 
-def clean_json(json):
-    return {k: v for k, v in json.items() if (
-        v != 'N/A' and v != '-' and v != '')}
-
-
-def clear_list(list):
-    return [i for i in list if (
-        i != 'N/A' and i != '-' and i != '')]
+def match(value):
+    return (value != 'N/A' and value != '-' and value != '')
 
 
 def clean_key(dic):
-    for key, value in dic.items():
+
+    new_dic = {k: v for k, v in dic.items() if match(v)}
+
+    for key, value in new_dic.items():
         if isinstance(value, dict):
-            dic[key] = clean_json(value)
+            new_dic[key] = {k: v for k, v in value.items() if match(v)}
         elif isinstance(value, list):
-            dic[key] = clear_list(value)
+            new_dic[key] = [i for i in value if match(i)]
+
+    return new_dic
 
 
 def clean_data():
     r = requests.get('https://coderbyte.com/api/challenges/json/json-cleaning')
 
-    dic = r.json()
-
-    new_dic = clean_json(dic)
-
-    clean_key(new_dic)
-
-    return new_dic
+    return clean_key(r.json())
 
 
 print(clean_data())

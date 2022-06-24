@@ -20,12 +20,13 @@
 
 def get_median(arr):
     arr.sort()
+    print('arr===>', arr)
 
     nums_len = len(arr)
     half = int(nums_len / 2)
 
     if nums_len % 2 == 0:
-        return (arr[half - 1] + arr[half]) / 2
+        return int((arr[half - 1] + arr[half]) / 2)
     return arr[half]
 
 
@@ -39,8 +40,22 @@ def ArrayChallenge(arr):
 
     N = array[0]
     nums = array[1:]
+    nums.sort()
 
-    return get_median(nums)
+    result = []
+
+    for k in range(0, len(nums)):
+        if (k < N):
+            if(k == 0):
+                result.append(nums[0])
+                print('result[0]', result)
+            else:
+                result.append(get_median(nums[0:k]))
+                print('result:', result)
+        else:
+            result.append(get_median(nums[k:N]))
+
+    return get_median(result)
 
 
 # keep this function call here
