@@ -34,13 +34,11 @@ def get_median(arr: List[int]) -> int:
         return arr[1]
     else:
         if not length % 2:
-            print('N par')
             a = arr[int(length/2)]
             b = arr[int((length/2)-1)]
             new_arr = [a, b]
             return get_median(new_arr)
         else:
-            print('N impar')
             return arr[int(length/2)]
 
 
