@@ -18,19 +18,33 @@
 # Input: [3, 0, 0, -2, 0, 2, 0, -2]
 # Output: 0,0,0,0,0,0,0
 
-def get_median(arr):
+from typing import List
+
+
+def get_median(arr: List[int]) -> int:
     arr.sort()
-    print('arr===>', arr)
 
-    nums_len = len(arr)
-    half = int(nums_len / 2)
+    length = len(arr)
 
-    if nums_len % 2 == 0:
-        return int((arr[half - 1] + arr[half]) / 2)
-    return arr[half]
+    if (length == 1):
+        return arr[0]
+    elif (length == 2):
+        return (arr[0]+arr[1])/2
+    elif (length == 3):
+        return arr[1]
+    else:
+        if not length % 2:
+            print('N par')
+            a = arr[int(length/2)]
+            b = arr[int((length/2)-1)]
+            new_arr = [a, b]
+            return get_median(new_arr)
+        else:
+            print('N impar')
+            return arr[int(length/2)]
 
 
-def ArrayChallenge(arr):
+def ArrayChallenge(arr: List[int]):
 
     arr = arr.replace('[', '')
     arr = arr.replace(']', '')
@@ -40,24 +54,20 @@ def ArrayChallenge(arr):
 
     N = array[0]
     nums = array[1:]
-    nums.sort()
-
-    result = []
+    result = ''
 
     for k in range(0, len(nums)):
         if (k < N):
-            if(k == 0):
-                result.append(nums[0])
-                print('result[0]', result)
+            if k == 0:
+                result = str(get_median(nums[0: k+1]))
             else:
-                result.append(get_median(nums[0:k]))
-                print('result:', result)
+                result = result + ',' + str(get_median(nums[0: k+1]))
         else:
-            result.append(get_median(nums[k:N]))
+            result = result + ',' + str(get_median(nums[k+1-N: k+1]))
 
-    return get_median(result)
+    return result
 
 
 # keep this function call here
 print(ArrayChallenge(
-    input('input a list, example [5, 7, 9, 1, 0, 3] ==> :  ')))
+    input('input a list, example [5, 2, 4, 6] ==> :  ')))
