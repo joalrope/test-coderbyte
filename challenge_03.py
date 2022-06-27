@@ -18,14 +18,34 @@
 #
 # Examples
 # Input: ["baseball", "a,all,b,ball,bas,base,cat,code,d,e,quit,z"]
-# Output: base,ballInput: ["abcgefd", "a,ab,abc,abcg,b,c,dog,e,efd,zzzz"]
+# Output: base,ball
+# Input: ["abcgefd", "a,ab,abc,abcg,b,c,dog,e,efd,zzzz"]
 # Output: abcg,efd
 
 
 def ArrayChallenge(strArr):
+    strArr = strArr.replace('[', '')
+    strArr = strArr.replace(']', '')
+    strArr = strArr.replace(' ', '')
+    strArr = strArr.replace('\"', '')
+
+    array = list(map(str, strArr.split(',')))
+
+    match = array[0]
+    dic = array[1:]
+    #result = []
+    pre = ''
+    pos = ''
+
+    for string in dic:
+        index = match.find(string)
+        if index > -1:
+            pos = match[index:]
+            pre = match[:index]
+        print([pre, pos])
 
     # code goes here
-    return strArr
+    return [pre, pos]
 
 
 # keep this function call here
